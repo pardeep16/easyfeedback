@@ -83,7 +83,8 @@ var getQuizesList=function(id,callback){
                                    
                                }
                                else{
-                                   
+                                    conn.release();
+                                     callback(null,{"status":false,"msg":"No record found"});
                                }
                            }
                        });
