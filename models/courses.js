@@ -15,6 +15,7 @@ var getCourseList=function(callback){
         else{
             conn.query(querySelect,function(err,rows){
                if(err){
+                   conn.release();
                    callback({"msg":"database error"},null);
                } 
                else{
@@ -27,10 +28,11 @@ var getCourseList=function(callback){
                               "course_name":rows[i].c_name
                            });
                        }
-                       
+                       conn.release();
                        callback(null,{"status":true,"count":rows.length,"msg":"Successfully Found","data":dataArray});
                    }
                    else{
+                       conn.release();
                        callback(null,{"status":false,"msg":"No record found"})
                    }
                }
