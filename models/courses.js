@@ -71,7 +71,7 @@ var getQuizesList=function(id,callback){
                        console.log(quiz_id);
                        console.log(totalQuestions);
                        
-                       var searchQuestions='Select * from questions where quiz_id='+quiz_id;
+                       var searchQuestions='SELECT * from questions where quiz_id='+mysql.escape(quiz_id);
                        
                        conn.query(searchQuestions,function(err,rows){
                            if(err){
@@ -79,7 +79,22 @@ var getQuizesList=function(id,callback){
                                  callback({"status":false,"msg":"database error"},null);
                            }
                            else{
+                               var options=new Array();
+                               var questionIds=new Array();
                                if(rows.length>0){
+                                   for(var j=0;j<rows.length;j++){
+                                       questionArray.push({
+                                           "qid":rows[j].ques_id,
+                                           "question_name":rows[j].question,
+                                           "total_options":rows[j].total_options
+                                       });
+                                       
+                                       questionIds.push(rows[j].ques_id);
+                                       
+                                       var searchOptions='Select * from options where question_id='+mysql.escape();
+                                   }
+                                   
+                                   
                                    
                                }
                                else{
