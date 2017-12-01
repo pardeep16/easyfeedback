@@ -130,6 +130,8 @@ var getQuizesList=function(id,callback){
                                             }
                                         });
                                     });
+                                    
+                                    callback(null,{"status":true,"questions":questionArray,"questionIds":questionIds,"options":optionsArray});
                                    
                                    
                                    
