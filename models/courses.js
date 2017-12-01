@@ -1,6 +1,6 @@
 var getConnection=require('./db');
 var mysql=require('mysql');
-
+var async=require('async');
 
 var getCourseList=function(callback){
     
@@ -91,8 +91,45 @@ var getQuizesList=function(id,callback){
                                        
                                        questionIds.push(rows[j].ques_id);
                                        
-                                       var searchOptions='Select * from options where question_id='+mysql.escape();
+                                       /*for(var xx=0;xx<questionIds.length;xx++){
+                                           getConnection(function(err,conn){
+                                                if(err){
+                                                    conn.release();
+                                                     callback({"status":false,"msg":"database error"},null);
+                                                } 
+                                                else{
+                                                    var searchOptions='Select * from options where question_id='+mysql.escape(questionIds[xx]);
+                                                    console.log(searchOptions);
+                                                    
+                                                    
+                                                }
+                                           });
+                                       }*/
+                                       
+                                     
                                    }
+                                   
+                                   var optionsArray=new Array();
+                                   
+                                    async.forEach(questionIds,function(id,callback){
+                                        var searchOptions='Select * from options where question_id='+mysql.escape(id);
+                                        
+                                        conn.query(searchOptions,function(err,rowss){
+                                            if(err){
+                                                 conn.release();
+                                                 callback({"status":false,"msg":"database error"},null);
+                                            }
+                                            else{
+                                                for(var t=0;t<rowss.length;t++){
+                                                    optionsArray.push({
+                                                        "option_id":rowss[t].option_id,
+                                                        "option":rowss[t].opt,
+                                                        "question_id":rowss[t].question_id
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    });
                                    
                                    
                                    
