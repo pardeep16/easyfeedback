@@ -13,6 +13,20 @@ var getCourses=function (req,res) {
 	});
 }
 
+var getQuizes=function(req,res){
+	var courseid=req.params.course_id;
+	console.log(courseid);
+	coursemod.getQuizesList(courseid,function(err,result){
+		if(err){
+			res.send(err);
+		}
+		else{
+			res.send(result);
+		}
+	});
+}
+
 module.exports={
-	getCourses:getCourses
+	getCourses:getCourses,
+	getQuizes:getQuizes
 }
