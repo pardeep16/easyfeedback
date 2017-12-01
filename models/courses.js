@@ -34,7 +34,7 @@ var getCourseList=function(callback){
                    }
                    else{
                        conn.release();
-                       callback(null,{"status":false,"msg":"No record found"})
+                       callback(null,{"status":false,"msg":"No record found"});
                    }
                }
             });
@@ -75,7 +75,16 @@ var getQuizesList=function(id,callback){
                        
                        conn.query(searchQuestions,function(err,rows){
                            if(err){
-                               
+                               conn.release();
+                                 callback({"status":false,"msg":"database error"},null);
+                           }
+                           else{
+                               if(rows.length>0){
+                                   
+                               }
+                               else{
+                                   
+                               }
                            }
                        });
                        
