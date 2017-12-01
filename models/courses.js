@@ -156,5 +156,6 @@ var getQuizesList=function(id,callback){
 
 
 module.exports={
-	getCourseList:getCourseList
+	getCourseList:getCourseList,
+	getQuizesList:getQuizesList
 }
