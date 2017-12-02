@@ -15,4 +15,6 @@ router.get('/quizes/:course_id',courses.getQuizes);
 router.get('/courselist',courses.getCourses);
 
 router.post('/api/v1/register',signin.newRegister);
+router.post('/api/v1/signin',signin.onLogin);
+
 module.exports = router;
