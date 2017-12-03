@@ -33,7 +33,7 @@ var onLogin=function(req,res,next){
         emp_id:emp_id,
         password:password
     }
-    signin.requestLogin(data,function(err,result){
+    reg.requestLogin(data,function(err,result){
         if(err){
             res.send(err);
         }
