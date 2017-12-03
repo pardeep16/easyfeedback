@@ -5,6 +5,8 @@ var courses=require('.././controllers/courses');
 
 var signin=require('.././controllers/signin');
 
+var quiz=require('.././controllers/quiz');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -16,5 +18,8 @@ router.get('/courselist',courses.getCourses);
 
 router.post('/api/v1/register',signin.newRegister);
 router.post('/api/v1/signin',signin.onLogin);
+
+
+router.post('/api/v1/submitquiz',quiz.submitquiz);
 
 module.exports = router;
