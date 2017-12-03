@@ -64,7 +64,7 @@ var register=function(data,callback) {
 
 
 var requestLogin=function(data,callback){
-    var emp_id=data.emp_id;
+    var emp_id=parseInt(data.emp_id);
     var password=data.password;
 
     var searchForLogin='Select e.emp_id,r.name from employee_login e JOIN employee_register r ON e.empid=r.emp_id where emp_id='+mysql.escape(emp_id)+" and password="+mysql.escape(password);
