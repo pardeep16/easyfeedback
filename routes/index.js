@@ -22,4 +22,8 @@ router.post('/api/v1/signin',signin.onLogin);
 
 router.post('/api/v1/submitquiz',quiz.submitquiz);
 
+router.get('/app/v1/android',function(req,res){
+	res.redirect('https://docs.google.com/uc?export=download&id=1Mnbu-Guyf8Z40muYXNdSGXl0FATawyli');
+});
+
 module.exports = router;
