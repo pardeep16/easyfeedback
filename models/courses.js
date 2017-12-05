@@ -52,7 +52,7 @@ var getQuizesList=function(id,callback){
     
     
     var searchQuiz='Select * from quiz where courseid='+course_id+" ORDER BY RAND() LIMIT 1";
-    console.log(searchQuiz);
+   // console.log(searchQuiz);
     getConnection(function(err,conn){
         if(err){
             conn.release();
@@ -70,13 +70,13 @@ var getQuizesList=function(id,callback){
                        
                        var quiz_id=rows[0].q_id;
                        var totalQuestions=rows[0].totalQuestions;
-                       console.log(quiz_id);
-                       console.log(totalQuestions);
+                   //    console.log(quiz_id);
+                     //  console.log(totalQuestions);
                        
                        //var searchQuestions='SELECT  DISTINCT q.ques_id,q.question,q.total_options,o.* from questions q JOIN options o ON q.ques_id=o.question_id where quiz_id='+mysql.escape(quiz_id)+" GROUP BY q.ques_id,o.option_id";
                        
                       var searchQuestions='Select DISTINCT ques_id,question,total_options from questions where quiz_id='+mysql.escape(quiz_id);
-                       console.log("search questions :"+searchQuestions);
+                     //  console.log("search questions :"+searchQuestions);
                        conn.query(searchQuestions,function(err,rows){
                            if(err){
                                 conn.release();
@@ -132,7 +132,7 @@ var getQuizesList=function(id,callback){
 
                                    async.forEach(dataArr,function(id1,cb){
                                        var optionsSearch='Select * from options where question_id='+id1+" GROUP BY option_id";
-                                      console.log(optionsSearch);
+                              //        console.log(optionsSearch);
 
                                       conn.query(optionsSearch,function(err,rows){
                                           if(err){
@@ -141,9 +141,9 @@ var getQuizesList=function(id,callback){
                                           }
                                           else{
                                               var optionsArr=new Array(); 
-                                              console.log("len :"+rows.length);
+                                       //       console.log("len :"+rows.length);
                                               for(var jj=0;jj<rows.length;jj++){
-                                                console.log(jj);
+                                       //         console.log(jj);
                                                 optionsArr.push({
                                                   "option_id":rows[jj].option_id,
                                                   "option":rows[jj].opt

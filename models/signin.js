@@ -38,7 +38,7 @@ var register=function(data,callback) {
                           else{
                               var insert_id=rows.insertId;
                               var loginInsertQuery='Insert into employee_login(empid,reg_id,password) values('+mysql.escape(emp_id)+","+insert_id+","+mysql.escape(password)+")";
-                              console.log(loginInsertQuery);
+                          //    console.log(loginInsertQuery);
 
                               conn.query(loginInsertQuery,function(err,rowss){
                                 if(err){
@@ -64,7 +64,7 @@ var register=function(data,callback) {
 
 
 var requestLogin=function(data,callback){
-    var emp_id=parseInt(data.emp_id);
+    var emp_id=data.emp_id;
     var password=data.password;
 
     var searchForLogin='Select e.empid,r.name from employee_login e JOIN employee_register r ON e.empid=r.emp_id where emp_id='+mysql.escape(emp_id)+" and password="+mysql.escape(password);
@@ -96,6 +96,8 @@ var requestLogin=function(data,callback){
     });
 
 }
+
+
 
 
 module.exports={

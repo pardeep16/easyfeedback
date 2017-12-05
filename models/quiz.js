@@ -49,7 +49,7 @@ var submitForQuiz=function(data,callback){
   					
 
   					var searchQuery='Select * from questions where quiz_id ='+mysql.escape(quiz_id)+" and ques_id ="+q_id;
-  					console.log(searchQuery);
+  					//console.log(searchQuery);
   					conn.query(searchQuery,function(err,rows){
   						if(err){
   							conn.release();
@@ -62,9 +62,9 @@ var submitForQuiz=function(data,callback){
 
   								var sub_ans=answers[counter].trim().replace(/\.$/,"").toLowerCase();
 
-  								console.log(newans);
-  								console.log(sub_ans);
-  								console.log(counter);
+  							//	console.log(newans);
+  							//	console.log(sub_ans);
+  							//	console.log(counter);
   								if(sub_ans==newans){
   									correctanswers++;
   									counter++;

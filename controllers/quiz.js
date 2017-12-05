@@ -3,7 +3,7 @@ var quizmod=require('.././models/quiz');
 
 var submitquiz=function(req,res,next){
 	var quiz_id=parseInt(req.body.quiz_id);
-	var emp_id=parseInt(req.body.emp_id);
+	var emp_id=req.body.emp_id;
 	var name=req.body.name;
 	var date=req.body.date;
 	var quizdata=req.body.data;
