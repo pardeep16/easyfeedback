@@ -19,7 +19,7 @@ var submitForQuiz=function(data,callback){
   
 
   var totalQuestions=quiz_data.length;
-  console.log(totalQuestions);
+  //console.log(totalQuestions);
 
   var correctanswers=0;
   var wronganswers=0;
@@ -41,7 +41,8 @@ var submitForQuiz=function(data,callback){
 
   		getConnection(function(err,conn){
   				if(err){
-  					conn.release();
+  					//conn.release();
+  					conn.destroy();
   					callback({"status":false,"msg":"database error 1!","error":err},null);
   				}
   				else{
@@ -52,7 +53,8 @@ var submitForQuiz=function(data,callback){
   					//console.log(searchQuery);
   					conn.query(searchQuery,function(err,rows){
   						if(err){
-  							conn.release();
+  							//conn.release();
+  							conn.destroy();
   							callback({"status":false,"msg":"database error 2!","error":err},null);
   						}
   						else{
@@ -82,7 +84,8 @@ var submitForQuiz=function(data,callback){
   					});
   		},function(err){
   			if(err){
-
+  					conn.destroy();
+  							callback({"status":false,"msg":"database error 2!","error":err},null);
   			}
   			else{
   				var marks=totalQuestions-wronganswers;
@@ -91,9 +94,11 @@ var submitForQuiz=function(data,callback){
 
   				conn.query(insertScore,function(err,rows){
   					if(err){
-
+  							conn.destroy();
+  							callback({"status":false,"msg":"database error 2!","error":err},null);
   					}
   					else{
+  						conn.destroy();
   						callback(null,{"status":true,"correct":correctanswers,"wrong":wronganswers,"emp_id":emp_id,"totalquestions":totalQuestions,"marks":marks});
   			
   					}

@@ -10,13 +10,13 @@ var getCourseList=function(callback){
     getConnection(function(err,conn){
         
         if(err){
-            conn.release();
+            conn.destroy();
             callback({"status":false,"msg":"database error"},null);
         }
         else{
             conn.query(querySelect,function(err,rows){
                if(err){
-                   conn.release();
+                   conn.destroy();
                    callback({"status":false,"msg":"database error"},null);
                } 
                else{
@@ -29,11 +29,11 @@ var getCourseList=function(callback){
                               "course_name":rows[i].c_name
                            });
                        }
-                       conn.release();
+                       conn.destroy();
                        callback(null,{"status":true,"count":rows.length,"msg":"Successfully Found","data":dataArray});
                    }
                    else{
-                       conn.release();
+                       conn.destroy();
                        callback(null,{"status":false,"msg":"No record found"});
                    }
                }
@@ -55,13 +55,13 @@ var getQuizesList=function(id,callback){
    // console.log(searchQuiz);
     getConnection(function(err,conn){
         if(err){
-            conn.release();
+            conn.destroy();
             callback({"status":false,"msg":"database error"},null);
         }
         else{
             conn.query(searchQuiz,function(err,rows){
                   if(err){
-                   conn.release();
+                   conn.destroy();
                    callback({"status":false,"msg":"database error"},null);
                } 
                else{
@@ -136,7 +136,7 @@ var getQuizesList=function(id,callback){
 
                                       conn.query(optionsSearch,function(err,rows){
                                           if(err){
-                                              conn.release();
+                                              conn.destroy();
                                               callback({"status":false,"msg":"database error"},null);
                                           }
                                           else{
@@ -161,6 +161,7 @@ var getQuizesList=function(id,callback){
 
                                   }
                                   else{
+                                    conn.destroy();
                                     callback(null,{"status":true,"quiz_id":quiz_id,"questions":questionsArr,"options":options1})
                                   }
                                  });
@@ -209,7 +210,7 @@ var getQuizesList=function(id,callback){
                                    
                                }
                                else{
-                                    conn.release();
+                                    conn.destroy();
                                      callback(null,{"status":false,"msg":"No record found"});
                                }
                            }
@@ -217,7 +218,7 @@ var getQuizesList=function(id,callback){
                        
                    }
                    else{
-                       conn.release();
+                       conn.destroy();
                        callback(null,{"status":false,"msg":"No record found"})
                    }
                }

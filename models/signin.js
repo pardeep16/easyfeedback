@@ -5,26 +5,26 @@ var register=function(data,callback) {
     
     // body...
     
-    var emp_id=data.emp_id;
-    var name=data.name;
-    var password=data.password;
+    var emp_id=data.emp_id.trim();
+    var name=data.name.trim();
+    var password=data.password.trim();
     
     var searchQuery='Select * from employee_register where emp_id='+mysql.escape(emp_id);
     console.log(searchQuery);
     getConnection(function(err,conn){
         if(err){
-            conn.release();
+            conn.destroy();
             callback({"status":false,"msg":"Database Error1!",err:err},null);
         }
         else{
             conn.query(searchQuery,function(err,rows){
                if(err){
-                   conn.release();
+                   conn.destroy();
                    callback({"status":false,"msg":"Database Error2!",err:err},null);
                } 
                else{
                    if(rows.length>0){
-                       conn.release();
+                       conn.destroy();
                        callback(null,{status:false,"msg":"User Already exist!"});
                    }
                    else{
@@ -32,7 +32,7 @@ var register=function(data,callback) {
                        console.log(registerQuery);
                        conn.query(registerQuery,function(err,rows){
                           if(err){
-                               conn.release();
+                               conn.destroy();
                                callback({"status":false,"msg":"Database Error1!",err:err},null);
                           } 
                           else{
@@ -42,12 +42,12 @@ var register=function(data,callback) {
 
                               conn.query(loginInsertQuery,function(err,rowss){
                                 if(err){
-                                  conn.release();
+                                  conn.destroy();
                                    callback({"status":false,"msg":"Database Error!",err:err},null);
                                 }
                                 else{
-                                    conn.release();
-
+                                    //conn.release();
+                                      conn.destroy();
                                     callback(null,{"status":true,"msg":"Registered Successfully","emp_id":emp_id,"name":name});
                                 }
                               });
