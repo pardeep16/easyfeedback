@@ -17,6 +17,7 @@ var getCourseList=function(callback){
             conn.query(querySelect,function(err,rows){
                if(err){
                    conn.destroy();
+                   console.log(err);
                    callback({"status":false,"msg":"database error"},null);
                } 
                else{
