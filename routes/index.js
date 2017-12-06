@@ -26,4 +26,8 @@ router.get('/app/v1/android',function(req,res){
 	res.redirect('https://docs.google.com/uc?export=download&id=1Mnbu-Guyf8Z40muYXNdSGXl0FATawyli');
 });
 
+router.get('/app/testv2/android',function(req,res){
+	res.redirect('https://docs.google.com/uc?export=download&id=1wHTxXXkwJnlMui8FV1M9Lpm_8cVj_8dY');
+});
+
 module.exports = router;
