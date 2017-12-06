@@ -109,6 +109,61 @@ var submitForQuiz=function(data,callback){
   });
 }
 
+
+var checkquizstatus=function(data,callback){
+
+	var emp_id=data.emp_id;
+	var quiz_id=data.quiz_id;
+
+	var searchQueryy='Select * from quizstatus where quiz_id='+mysql.escape(quiz_id)+" and emp_id="+mysql.escape(emp_id);
+
+	getConnection(function(err,conn){
+		if(err){
+			conn.destroy();
+  			callback({"status":false,"msg":"database error 2!","error":err},null);
+		}
+		else{
+			conn.query(searchQueryy,function(err,rows){
+				if(err){
+					conn.destroy();
+  					callback({"status":false,"msg":"database error 2!","error":err},null);
+				}
+				else{
+					if(rows.length>0){
+
+						if(rows[0].status==true||rows[0].status=='true'){
+							conn.destroy();
+  							callback({"status":false,"msg":"Sorry You can't retake quiz again."},null);
+						}
+						else{
+							conn.destroy();
+  							callback({"status":false,"msg":"Sorry You can't retake quiz again."},null);
+
+						}
+						
+					}
+					else{
+						var insertQueryy='Insert into quizstatus(quiz_id,emp_id,status) values('+mysql.escape(quiz_id)+","+mysql.escape(emp_id)+","+mysql.escape("true")+")";
+						conn.query(insertQueryy,function(err,rows){
+							if(err){
+								conn.destroy();
+  								callback({"status":false,"msg":"database error 2!","error":err},null);
+							}
+							else{
+								conn.destroy();
+  								callback(null,{"status":true,"msg":"Quiz Started.Please don't press back button."});
+							}
+						});
+
+					}
+				}
+		});
+		}
+	});
+
+}
+
 module.exports={
-	submitForQuiz:submitForQuiz
+	submitForQuiz:submitForQuiz,
+	checkquizstatus:checkquizstatus
 }
