@@ -24,6 +24,8 @@ router.post('/api/v1/submitquiz',quiz.submitquiz);
 
 router.post('/api/v1/checkquizstatus',quiz.checkstatus);
 
+router.get('/api/v1/checkusername',signin.checkUserName);
+
 router.get('/app/v1/android',function(req,res){
 	res.redirect('https://docs.google.com/uc?export=download&id=1Mnbu-Guyf8Z40muYXNdSGXl0FATawyli');
 });

@@ -5,11 +5,15 @@ var newRegister=function(req,res,next){
     var emp_id=req.body.emp_id;
     var name=req.body.name;
     var password=req.body.password;
+    var email=req.body.email;
+    var location=req.body.location;
     
     var data={
       emp_id:emp_id,
       name:name,
-      password:password
+      password:password,
+      email:email,
+      location:location
     };
     
     reg.register(data,function(err,result){
@@ -46,11 +50,26 @@ var onLogin=function(req,res,next){
 }
 
 
+var checkUserName=function(req,res,next){
+    var username=req.body.username;
+
+    reg.checkusername(username,function(err,result){
+        if(err){
+            res.send(err);
+        }
+        else{
+            res.send(result);
+        }
+    });
+
+}
+
 
 
 
 
 module.exports={
     newRegister:newRegister,
-    onLogin:onLogin
+    onLogin:onLogin,
+    checkUserName:checkUserName
 }

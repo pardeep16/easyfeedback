@@ -8,9 +8,12 @@ var register=function(data,callback) {
     var emp_id=data.emp_id.trim();
     var name=data.name.trim();
     var password=data.password.trim();
+    var email=data.email.trim();
+    var location=data.location.trim();
+
     
     var searchQuery='Select * from employee_register where emp_id='+mysql.escape(emp_id);
-    console.log(searchQuery);
+   // console.log(searchQuery);
     getConnection(function(err,conn){
         if(err){
             conn.destroy();
@@ -28,7 +31,7 @@ var register=function(data,callback) {
                        callback(null,{status:false,"msg":"User Already exist!"});
                    }
                    else{
-                       var registerQuery='Insert into employee_register(emp_id,name) values('+mysql.escape(emp_id)+","+mysql.escape(name)+")";
+                       var registerQuery='Insert into employee_register(emp_id,name,email,location) values('+mysql.escape(emp_id)+","+mysql.escape(name)+","+mysql.escape(email)+","+mysql.escape(location)+")";
                        console.log(registerQuery);
                        conn.query(registerQuery,function(err,rows){
                           if(err){
@@ -69,25 +72,25 @@ var requestLogin=function(data,callback){
 
     var searchForLogin='Select e.empid,r.name from employee_login e JOIN employee_register r ON e.empid=r.emp_id where emp_id='+mysql.escape(emp_id)+" and password="+mysql.escape(password);
 
-    console.log(searchForLogin);
+   // console.log(searchForLogin);
     getConnection(function(err,conn){
         if(err){
-            conn.release();
+            conn.destroy();
             callback({"status":false,"msg":"Database Error!",err:err},null);
         }
         else{
             conn.query(searchForLogin,function(err,rows){
                 if(err){
-                    conn.release();
+                    conn.destroy();
                     callback({"status":false,"msg":"Database Error!",err:err},null);
                 }
                 else{
                     if(rows.length>0){
-                      conn.release();
+                      conn.destroy();
                       callback(null,{"status":true,"msg":"Welcome "+rows[0].name,"emp_id":rows[0].empid,"name":rows[0].name});
                     }
                     else{
-                      conn.release();
+                      conn.destroy();
                       callback(null,{"status":false,"msg":"Invalid details!Please Try Again"});
                     }
                 }
@@ -98,9 +101,44 @@ var requestLogin=function(data,callback){
 }
 
 
+var checkusername=function(name,callback){
+  var emp_username=name;
+
+  var searchUser='Select * from employee_register where emp_id='+mysql.escape(emp_username);
+
+  console.log(searchUser);
+
+  getConnection(function(err,conn){
+      if(err){
+        conn.destroy();
+            callback({"status":false,"msg":"Something Wrong!Try Again",err:err},null);
+      }
+      else{
+        conn.query(searchUser,function(err,rows){
+          if(err){
+             conn.destroy();
+             callback({"status":false,"msg":"Something Wrong!Try Again",err:err},null);
+          }
+          else{
+            if(rows.length>0){
+              conn.destroy();
+              callback(null,{"status":false,"msg":"Username Already exist!"});
+            }
+            else{
+              conn.destroy();
+              callback(null,{"status":true,"msg":"Username Available"});
+            }
+          }
+        });
+      }
+  });
+}
+
+
 
 
 module.exports={
   register:register,
-  requestLogin:requestLogin
+  requestLogin:requestLogin,
+  checkusername:checkusername
 }
