@@ -34,7 +34,7 @@ router.get('/app/testv2/android',function(req,res){
 
 
 router.get('/app/release/android',function(req,res){
-	res.redirect('https://docs.google.com/uc?export=download&id=1aFgKDP1zf6MhnTicPybtSkWT7Bd0QnyD');
+	res.redirect('https://docs.google.com/uc?export=download&id=1sXxAPyTclKCvvQjbPogZ6NAo9VMjXq8G');
 });
 
 module.exports = router;
