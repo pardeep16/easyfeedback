@@ -32,4 +32,9 @@ router.get('/app/testv2/android',function(req,res){
 	res.redirect('https://docs.google.com/uc?export=download&id=1wHTxXXkwJnlMui8FV1M9Lpm_8cVj_8dY');
 });
 
+
+router.get('/app/release/android',function(req,res){
+	res.redirect('https://docs.google.com/uc?export=download&id=1aFgKDP1zf6MhnTicPybtSkWT7Bd0QnyD');
+});
+
 module.exports = router;
