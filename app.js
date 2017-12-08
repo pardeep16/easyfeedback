@@ -23,8 +23,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/app/release1/android',express.static(path.join('./upload/')));
 app.use('/techquiz',express.static(path.join('./upload/learnersweekfinal.apk')));
-app.use('/techquiz/d',express.static(path.join('./upload/learnersweekfinal.apk')));
-app.use('/techquiz/a',express.static(path.join('./upload/learnersweekdigital.apk')));
+//app.use('/techquiz/d',express.static(path.join('./upload/learnersweekfinal.apk')));
+app.use('/techquiz/app',express.static(path.join('./upload/learnersweekdigital.apk')));
 
 app.use('/', routes);
 app.use('/users', users);
