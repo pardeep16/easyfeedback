@@ -89,7 +89,7 @@ var requestLogin=function(data,callback){
     var emp_id=data.emp_id;
     var password=data.password;
 
-    var searchForLogin='Select e.empid,r.name from employee_login e JOIN employee_register r ON e.empid=r.emp_id where emp_id='+mysql.escape(emp_id)+" and password="+mysql.escape(password);
+    var searchForLogin='Select e.empid,r.name,c.role from employee_login e JOIN employee_register r join employee_feedback_role c ON e.empid=r.emp_id where e.empid='+mysql.escape(emp_id)+" and e.password="+mysql.escape(password) +"and e.empid=c.emp_id";
 
    // console.log(searchForLogin);
     getConnection(function(err,conn){
@@ -106,7 +106,7 @@ var requestLogin=function(data,callback){
                 else{
                     if(rows.length>0){
                       conn.destroy();
-                      callback(null,{"status":true,"msg":"Welcome "+rows[0].name,"emp_id":rows[0].empid,"name":rows[0].name});
+                      callback(null,{"status":true,"msg":"Welcome "+rows[0].name,"emp_id":rows[0].empid,"name":rows[0].name,"category":rows[0].role});
                     }
                     else{
                       conn.destroy();
