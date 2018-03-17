@@ -12,7 +12,11 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+<<<<<<< HEAD
 app.set('view engine', 'jade');
+=======
+app.set('view engine', 'ejs');
+>>>>>>> 489e16fbe0e5cbb7b8387b19d6b6c66cf52c626e
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -21,6 +25,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+<<<<<<< HEAD
+=======
+app.use('/app/release1/android',express.static(path.join('./upload/')));
+app.use('/techquiz',express.static(path.join('./upload/techquizapp.apk')));
+//app.use('/techquiz/d',express.static(path.join('./upload/learnersweekfinal.apk')));
+app.use('/techquiz/app',express.static(path.join('./upload/techquizapp.apk')));
+>>>>>>> 489e16fbe0e5cbb7b8387b19d6b6c66cf52c626e
 
 app.use('/', routes);
 app.use('/users', users);

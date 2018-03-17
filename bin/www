@@ -5,7 +5,11 @@
  */
 
 var app = require('../app');
+<<<<<<< HEAD
 var debug = require('debug')('easyfeedback:server');
+=======
+var debug = require('debug')('learnersweek:server');
+>>>>>>> 489e16fbe0e5cbb7b8387b19d6b6c66cf52c626e
 var http = require('http');
 
 /**
