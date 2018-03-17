@@ -55,7 +55,8 @@ var register=function(data,callback) {
                                     //conn.release();
                                      // conn.destroy();
                                       // callback(null,{"status":true,"msg":"Registered Successfully","emp_id":emp_id,"name":name});
-                                 var insertRegisterCategory="Insert into employee_feedback_role(emp_id,name,role) values("+mysql.escape(insert_id)+","+mysql.escape(name)+","+mysql.escape(category)+")";
+                                 var insertRegisterCategory="Insert into employee_feedback_role(emp_id,name,role) values("+mysql.escape(emp_id)+","+mysql.escape(name)+","+mysql.escape(category)+")";
+                                 console.log(insertRegisterCategory);
                                  conn.query(insertRegisterCategory,function(err,rows1){
                                     if(err){
                                         conn.destroy();
