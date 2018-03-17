@@ -59,6 +59,7 @@ var register=function(data,callback) {
                                  conn.query(insertRegisterCategory,function(err,rows1){
                                     if(err){
                                         conn.destroy();
+                                        console.log(err);
                                          callback({"status":false,"msg":"Unable to proceed your Request!Contact to support team.",err:err},null);
                                   
                                     }
