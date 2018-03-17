@@ -7,13 +7,16 @@ var newRegister=function(req,res,next){
     var password=req.body.password;
     var email=req.body.email;
     var location=req.body.location;
+    var category=req.body.category;
+
     
     var data={
       emp_id:emp_id,
       name:name,
       password:password,
       email:email,
-      location:location
+      location:location,
+      category:category
     };
     
     reg.register(data,function(err,result){

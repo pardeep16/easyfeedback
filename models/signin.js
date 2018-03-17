@@ -10,9 +10,12 @@ var register=function(data,callback) {
     var password=data.password.trim();
     var email=data.email.trim();
     var location=data.location.trim();
+    var category=data.category.trim();
 
     
     var searchQuery='Select * from employee_register where emp_id='+mysql.escape(emp_id);
+
+
    // console.log(searchQuery);
     getConnection(function(err,conn){
         if(err){
@@ -50,8 +53,22 @@ var register=function(data,callback) {
                                 }
                                 else{
                                     //conn.release();
+                                     // conn.destroy();
+                                      // callback(null,{"status":true,"msg":"Registered Successfully","emp_id":emp_id,"name":name});
+                                 var insertRegisterCategory="Insert into employee_feedback_role(emp_id,name,role) values("+mysql.escape(insert_id)+","+mysql.escape(name)+","+mysql.escape(category)+")";
+                                 conn.query(insertRegisterCategory,function(err,rows1){
+                                    if(err){
+                                        conn.destroy();
+                                         callback({"status":false,"msg":"Unable to proceed your Request!Contact to support team.",err:err},null);
+                                  
+                                    }
+                                    else{
                                       conn.destroy();
-                                    callback(null,{"status":true,"msg":"Registered Successfully","emp_id":emp_id,"name":name});
+                                      callback(null,{"status":true,"msg":"Registered Successfully","emp_id":emp_id,"name":name,"category":category});
+                                 
+                                    }
+                                 });
+
                                 }
                               });
 

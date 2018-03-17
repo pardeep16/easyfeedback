@@ -1,22 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
-<<<<<<< HEAD
-=======
+
 var courses=require('.././controllers/courses');
 
 var signin=require('.././controllers/signin');
 
 var quiz=require('.././controllers/quiz');
 
->>>>>>> 489e16fbe0e5cbb7b8387b19d6b6c66cf52c626e
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-<<<<<<< HEAD
-=======
+
 router.get('/quizes/:course_id',courses.getQuizes);
 
 router.get('/courselist',courses.getCourses);
@@ -48,5 +46,5 @@ router.get('/app/final/android',function(req,res){
 	res.redirect('https://docs.google.com/uc?export=download&id=1n7sxuZqqREoR34q4MtUE1IF41b3hCg1b');
 });
 
->>>>>>> 489e16fbe0e5cbb7b8387b19d6b6c66cf52c626e
+
 module.exports = router;
