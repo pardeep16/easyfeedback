@@ -3,7 +3,9 @@ var coursemod=require('.././models/courses');
 
 var getCourses=function (req,res) {
 	// body...
-	coursemod.getCourseList(function(err,result){
+	var category=req.query.category;
+
+	coursemod.getCourseList(category,function(err,result){
 		if(err){
 			res.send(err);
 		}

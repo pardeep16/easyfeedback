@@ -2,9 +2,11 @@ var getConnection=require('./db');
 var mysql=require('mysql');
 var async=require('async');
 
-var getCourseList=function(callback){
+var getCourseList=function(category,callback){
+
+  var categorySearch=category.toLowerCase().trim().toString();
     
-    var querySelect='Select DISTINCT * from course GROUP BY c_name';
+    var querySelect='Select DISTINCT * from employee_feedback_prg where LOWER(category)='+mysql.escape(categorySearch)+" GROUP BY prg_name";
     
     
     getConnection(function(err,conn){
@@ -26,8 +28,10 @@ var getCourseList=function(callback){
                        
                        for(var i=0;i<rows.length;i++){
                            dataArray.push({
-                              "course_id":rows[i].c_id,
-                              "course_name":rows[i].c_name
+                              "course_id":rows[i].prg_id,
+                              "course_name":rows[i].c_name,
+                              "status":rows[i].status,
+                              "category":rows[i].category
                            });
                        }
                        conn.destroy();
