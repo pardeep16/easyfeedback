@@ -6,7 +6,7 @@ var getCourseList=function(category,callback){
 
   var categorySearch=category.toLowerCase().trim().toString();
     
-    var querySelect='Select DISTINCT * from employee_feedback_prg where LOWER(category)='+mysql.escape(categorySearch)+" GROUP BY prg_name";
+    var querySelect='Select DISTINCT * from employee_feedback_prg where LOWER(category)='+mysql.escape(categorySearch)+" GROUP BY prg_name order by prg_id asc";
     
     
     getConnection(function(err,conn){
@@ -27,10 +27,14 @@ var getCourseList=function(category,callback){
                        var dataArray=new Array();
                        
                        for(var i=0;i<rows.length;i++){
+
+                          if(rows[i].prg_status=="0"){
+                            rows[i].prg_status="false";
+                          }
                            dataArray.push({
                               "course_id":rows[i].prg_id,
-                              "course_name":rows[i].c_name,
-                              "status":rows[i].status,
+                              "course_name":rows[i].prg_name,
+                              "status":rows[i].prg_status,
                               "category":rows[i].category
                            });
                        }
@@ -56,7 +60,8 @@ var getQuizesList=function(id,callback){
 
     
     
-    var searchQuiz='Select * from quiz where courseid='+course_id+" ORDER BY RAND() LIMIT 1";
+    var searchQuiz='Select * from quiz where courseid='+course_id;
+    //" ORDER BY RAND() LIMIT 1";
    // console.log(searchQuiz);
     getConnection(function(err,conn){
         if(err){
