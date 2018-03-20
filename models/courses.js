@@ -168,11 +168,37 @@ var getQuizesList=function(id,callback){
                                       });
                                  },function(err){
                                   if(err){
+                                    conn.release();
+                                     callback({"status":false,"msg":"database error2","err":err},null);
 
                                   }
                                   else{
-                                    conn.destroy();
-                                    callback(null,{"status":true,"quiz_id":quiz_id,"questions":questionsArr,"options":options1})
+                                  //  conn.destroy();
+                                    //callback(null,{"status":true,"quiz_id":quiz_id,"questions":questionsArr,"options":options1});
+
+                                    var selectPreQuestions='select * from mentor_feedback_question where prg_id='+mysql.escape(course_id);
+                                    console.log(selectPreQuestions);
+                                    conn.query(selectPreQuestions,function(err,rows11){
+                                      if(err){
+                                          conn.release();
+                                          callback({"status":false,"msg":"database error2","err":err},null);
+                                      }
+                                      else{
+                                        var totalCount=rows11.length;
+                                        var preQuestions=new Array();
+
+                                        for(var i=0;i<rows11.length;i++){
+                                          preQuestions.push({
+                                            "id":rows11[i].id,
+                                            "question":rows11[i].question,
+                                            "prg_id":rows11[i].prg_id
+                                          });
+
+                                        }
+                                        conn.destroy();
+                                        callback(null,{"status":true,"quiz_id":quiz_id,"questions":questionsArr,"options":options1,"prequestions":preQuestions});
+                                      }
+                                    });
                                   }
                                  });
                                    
