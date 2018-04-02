@@ -299,12 +299,12 @@ var submitFeedbackMentor=function(datapass,callback){
                     var ques_id=ques[j].ques_id;
                     var answer=ques[j].answer.toString().trim();
                     var strr="("+mysql.escape(insertid)+","+mysql.escape(emp_id)+","+mysql.escape(name)+","+mysql.escape(ques_id)+","+mysql.escape(answer)+","+mysql.escape(phase_id)+")";
-                    insertRecord+strr;
+                    insertRecord=insertRecord+strr;
                     if(j-1==ques.length){
 
                     }
                     else{
-                      insertRecord+",";
+                      insertRecord=insertRecord+",";
                     }
                   }
               }
