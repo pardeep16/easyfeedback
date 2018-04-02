@@ -271,7 +271,7 @@ var submitFeedbackMentor=function(datapass,callback){
   var len=data.length;
   var phase_id=datapass.phase_id;
 
-  var createNewForm="Insert into feedbackform(emp_id,date,totalmentee,category) values("+mysql.escape(mentorid)+","+mysql.escape(date)+","+mysql.escape(len)+","+"mentor"+")";
+  var createNewForm="Insert into feedbackform(emp_id,date,totalmentee,category) values("+mysql.escape(mentorid)+","+mysql.escape(date)+","+mysql.escape(len)+","+"'"+"mentor"+"'"+")";
   console.log(createNewForm);
 
   getConnection(function(err,conn){
