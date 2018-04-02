@@ -303,11 +303,11 @@ var submitFeedbackMentor=function(datapass,callback){
                     insertRecord=insertRecord+strr;
                     
                    
-                    if(i!=(data.length-1)){
-                      insertRecord=insertRecord+",";
+                    if(i==(data.length-1) && j==(ques.length-1)){
+                      insertRecord=insertRecord+";";
                     }
                     else{
-                      insertRecord=insertRecord+";";
+                      insertRecord=insertRecord+",";
                       
                     }
                   }
