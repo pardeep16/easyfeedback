@@ -28,7 +28,22 @@ var getQuizes=function(req,res){
 	});
 }
 
+var submitMentorFeedback=function(req,res,next){
+	var data=req.body;
+
+	coursemod.submitFeedbackMentor(data,function(err,results){
+		if(err){
+			res.send(err);
+		}
+		else{
+			res.send(results);
+		}
+	});
+
+}
+
 module.exports={
 	getCourses:getCourses,
-	getQuizes:getQuizes
+	getQuizes:getQuizes,
+	submitMentorFeedback:submitMentorFeedback
 }

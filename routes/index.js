@@ -48,5 +48,7 @@ router.get('/app/final/android',function(req,res){
 
 router.get('/api/v1/easyfeedback/getMentee/:mentorId',signin.getMenteeNames);
 
+router.post('/api/v1/easyfeedback/submitfeedback/mentor',courses.submitMentorFeedback);
+
 
 module.exports = router;

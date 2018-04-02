@@ -264,7 +264,71 @@ var getQuizesList=function(id,callback){
 }
 
 
+var submitFeedbackMentor=function(datapass,callback){
+  var mentorid=datapass.mentor;
+  var data=datapass.data;
+  var date=new Date();
+  var len=data.length;
+  var phase_id=datapass.phase_id;
+
+  var createNewForm="Insert into feedbackform(emp_id,date,totalmentee,category) values("+mysql.escape(mentorid)+","+mysql.escape(date)+","+mysql.escape(len)+","+"mentor"+")";
+  console.log(createNewForm);
+
+  getConnection(function(err,conn){
+      if(err){
+            conn.destroy();
+            callback({"status":false,"msg":"database error"},null);
+        }
+        else{
+          conn.query(createNewForm,function(err,rows){
+            if(err){
+            conn.destroy();
+            callback({"status":false,"msg":err},null);
+            }
+            else{
+              var insertid=rows.insertId;
+              var insertRecord='Insert into feedbackdetail(form_id,emp_id,name,ques_id,answer,phase_id) values';
+
+              for(var i=0;i<data.length;i++){
+
+                var emp_id=data[i].emp_id;
+                var name=data[i].name;
+                var ques=data[i].questions;
+
+                  for(var j=0;j<ques.length;j++){
+                    var ques_id=ques[j].ques_id;
+                    var answer=ques[j].answer.toString().trim();
+                    var strr="("+mysql.escape(insertid)+","+mysql.escape(emp_id)+","+mysql.escape(name)+","+mysql.escape(ques_id)+","+mysql.escape(answer)+","+mysql.escape(phase_id)+")";
+                    insertRecord.append(strr);
+                    if(j-1==ques.length){
+
+                    }
+                    else{
+                      insertRecord.append(",");
+                    }
+                  }
+              }
+              console.log(insertRecord);
+              conn.query(insertRecord,function(err,rowss){
+                if(err){
+                  conn.destroy();
+            callback(null,{"status":false,"msg":err});
+                }
+                else{
+                  conn.destroy();
+                   callback(null,{"status":true,"msg":"Submitted Successfully"});
+                }
+              });
+            }
+          });
+        }
+  });
+
+}
+
+
 module.exports={
 	getCourseList:getCourseList,
-	getQuizesList:getQuizesList
+	getQuizesList:getQuizesList,
+  submitFeedbackMentor:submitFeedbackMentor
 }
