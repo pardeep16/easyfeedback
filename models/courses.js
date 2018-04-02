@@ -287,13 +287,14 @@ var submitFeedbackMentor=function(datapass,callback){
             }
             else{
               var insertid=rows.insertId;
-              var insertRecord='Insert into feedbackdetail(form_id,emp_id,name,ques_id,answer,phase_id) values ';
+              var insertRecord='Insert into feedbackdetail (form_id,emp_id,name,ques_id,answer,phase_id) values ';
 
               for(var i=0;i<data.length;i++){
 
                 var emp_id=data[i].emp_id;
                 var name=data[i].name;
                 var ques=data[i].questions;
+                var lenn=ques.length-1;
 
                   for(var j=0;j<ques.length;j++){
                     var ques_id=ques[j].ques_id;
@@ -301,7 +302,7 @@ var submitFeedbackMentor=function(datapass,callback){
                     var strr="("+mysql.escape(insertid)+","+mysql.escape(emp_id)+","+mysql.escape(name)+","+mysql.escape(ques_id)+","+mysql.escape(answer)+","+mysql.escape(phase_id)+")";
                     insertRecord=insertRecord+strr;
                     
-                    if(j==ques.length-1){
+                    if(j==lenn){
                          insertRecord=insertRecord+";";
                     }
                     else{
