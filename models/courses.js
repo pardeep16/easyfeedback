@@ -302,11 +302,13 @@ var submitFeedbackMentor=function(datapass,callback){
                     var strr="("+mysql.escape(insertid)+","+mysql.escape(emp_id)+","+mysql.escape(name)+","+mysql.escape(ques_id)+","+mysql.escape(answer)+","+mysql.escape(phase_id)+")";
                     insertRecord=insertRecord+strr;
                     
-                    if(j==lenn){
-                         insertRecord=insertRecord+";";
+                   
+                    if(j!=(ques.length-1)){
+                      insertRecord=insertRecord+",";
                     }
                     else{
-                      insertRecord=insertRecord+",";
+                      insertRecord=insertRecord+"";
+                      
                     }
                   }
               }
