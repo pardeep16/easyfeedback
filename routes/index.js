@@ -46,5 +46,7 @@ router.get('/app/final/android',function(req,res){
 	res.redirect('https://docs.google.com/uc?export=download&id=1n7sxuZqqREoR34q4MtUE1IF41b3hCg1b');
 });
 
+router.get('/api/v1/easyfeedback/getMentee/:mentorId',signin.getMenteeNames);
+
 
 module.exports = router;

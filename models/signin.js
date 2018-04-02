@@ -154,10 +154,54 @@ var checkusername=function(name,callback){
 }
 
 
+var getMentees=function(mentorid,callback){
+  var mentor=mentorid.toString().trim();
+
+  var selectQry='Select * from employee_feedback_role where role_pm='+mysql.escape(mentor);
+
+  console.log(selectQry);
+
+  getConnection(function(err,conn){
+    if(err){
+      conn.destroy();
+      callback({"status":false,"msg":"Something Wrong!Try Again",err:err},null);
+    }
+    else{
+      conn.query(selectQry,function(err,rowss){
+        if(err){
+              conn.destroy();
+              callback(null,{"status":false,"msg":"Something Wrong!Try Again"});
+        }
+        else{
+          if(rowss.length>0){
+              var data=new Array();
+               for(var i=0;i<rowss.length;i++){
+                data.push({
+                  "name":rowss[i].name,
+                  "emp_id":rowss[i].emp_id
+                });
+               } 
+               conn.destroy();
+               callback(null,{"status":true,"msg":"Data Found","data":data});
+          }
+          else{
+              conn.destroy();
+              callback(null,{"status":false,"msg":"No record found!"});
+          }
+        }
+      });
+    }
+  });
+
+
+}
+
+
 
 
 module.exports={
   register:register,
   requestLogin:requestLogin,
-  checkusername:checkusername
+  checkusername:checkusername,
+  getMentees:getMentees
 }

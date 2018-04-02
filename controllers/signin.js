@@ -67,6 +67,19 @@ var checkUserName=function(req,res,next){
 
 }
 
+var getMenteeNames=function(req,res,next){
+    var mentorid=req.params.mentorId;
+
+    reg.getMentees(mentorid,function(err,result){
+        if(err){
+            res.send(err);
+        }
+        else{
+            res.send(result);
+        }
+    });
+}
+
 
 
 
@@ -74,5 +87,6 @@ var checkUserName=function(req,res,next){
 module.exports={
     newRegister:newRegister,
     onLogin:onLogin,
-    checkUserName:checkUserName
+    checkUserName:checkUserName,
+    getMenteeNames:getMenteeNames
 }
