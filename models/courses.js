@@ -270,6 +270,8 @@ var submitFeedbackMentor=function(datapass,callback){
   var date=new Date();
   var len=data.length;
   var phase_id=datapass.phase_id;
+  var prequestionsData=datapass.prequestions;
+
 
   var createNewForm="Insert into feedbackform(emp_id,date,totalmentee,category) values("+mysql.escape(mentorid)+","+mysql.escape(date)+","+mysql.escape(len)+","+"'"+"mentor"+"'"+")";
   console.log(createNewForm);
@@ -319,8 +321,42 @@ var submitFeedbackMentor=function(datapass,callback){
             callback(null,{"status":false,"msg":err});
                 }
                 else{
+
+
+
+                  if(prequestionsData!=null){
+                      var insertQueery='Insert into feedback_sharing_date(emp_id,ques_id,planned_date,actual_date,prg_id) values ';
+
+                      for(var l=0;l<prequestionsData.length;l++){
+                        insertQueery=insertQueery+"("+mysql.escape(mentorid)+","+mysql.escape(prequestionsData[l].ques_id)+","+mysql.escape(prequestionsData[l].planneddate)+
+                          ","+mysql.escape(prequestionsData[l].actualdate)+","+mysql.escape(prequestionsData[l].prg_id)+")";
+
+                          if (l==(prequestionsData.length)-1) {
+                            insertQueery=insertQueery+";"
+                          }
+                          else{
+                            insertQueery=insertQueery+","
+                          }
+                      }
+
+                      console.log("querry  :"+insertQueery);
+
+                      conn.query(insertQueery,function(err,rowss){
+                        if(err){
+                            conn.destroy();
+                            callback(null,{"status":true,"msg":"Submitted Successfully"});
+                        }
+                        else{
+                            conn.destroy();
+                            callback(null,{"status":true,"msg":"Submitted Successfully"});
+                        }
+                      });
+
+                  }
+                  else{
                   conn.destroy();
                    callback(null,{"status":true,"msg":"Submitted Successfully"});
+                 }
                 }
               });
             }
