@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/app/release1/android',express.static(path.join('./upload/')));
 app.use('/techquiz',express.static(path.join('./upload/techquizapp.apk')));
 //app.use('/techquiz/d',express.static(path.join('./upload/learnersweekfinal.apk')));
-app.use('/feedbackapp',express.static(path.join('./upload/easyfeedback.apk')));
+app.use('/feedbackapp',express.static(path.join('./upload/FAP.apk')));
 
 
 app.use('/', routes);
