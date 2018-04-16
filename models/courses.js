@@ -196,7 +196,7 @@ var getQuizesList=function(id,callback){
 
                                         }
                                         conn.destroy();
-                                        callback(null,{"status":true,"quiz_id":quiz_id,"questions":questionsArr,"options":options1,"prequestions":preQuestions});
+                                        callback(null,{"status":true,"prg_id":course_id,"quiz_id":quiz_id,"questions":questionsArr,"options":options1,"prequestions":preQuestions});
                                       }
                                     });
                                   }
@@ -271,6 +271,7 @@ var submitFeedbackMentor=function(datapass,callback){
   var len=data.length;
   var phase_id=datapass.phase_id;
   var prequestionsData=datapass.prequestions;
+  var form_id=null;
 
 
   var createNewForm="Insert into feedbackform(emp_id,date,totalmentee,category) values("+mysql.escape(mentorid)+","+mysql.escape(date)+","+mysql.escape(len)+","+"'"+"mentor"+"'"+")";
@@ -289,6 +290,7 @@ var submitFeedbackMentor=function(datapass,callback){
             }
             else{
               var insertid=rows.insertId;
+              form_id=insertid;
               var insertRecord='Insert into feedbackdetail (form_id,emp_id,name,ques_id,answer,phase_id) values ';
 
               for(var i=0;i<data.length;i++){
@@ -325,11 +327,11 @@ var submitFeedbackMentor=function(datapass,callback){
 
 
                   if(prequestionsData!=null){
-                      var insertQueery='Insert into feedback_sharing_date(emp_id,ques_id,planned_date,actual_date,prg_id) values ';
+                      var insertQueery='Insert into feedback_sharing_date(emp_id,ques_id,planned_date,actual_date,prg_id,form_id) values ';
 
                       for(var l=0;l<prequestionsData.length;l++){
                         insertQueery=insertQueery+"("+mysql.escape(mentorid)+","+mysql.escape(prequestionsData[l].ques_id)+","+mysql.escape(prequestionsData[l].planneddate)+
-                          ","+mysql.escape(prequestionsData[l].actualdate)+","+mysql.escape(prequestionsData[l].prg_id)+")";
+                          ","+mysql.escape(prequestionsData[l].actualdate)+","+mysql.escape(prequestionsData[l].prg_id)+","+mysql.escape(form_id)+")";
 
                           if (l==(prequestionsData.length)-1) {
                             insertQueery=insertQueery+";"
