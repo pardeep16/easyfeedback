@@ -64,7 +64,7 @@ var getCourseList=function(data,callback){
                           }
                           else{
                             conn.destroy();
-                             callback(null,{"status":true,"count":rows.length,"msg":"Successfully Found","data":dataArray,"sprint_over":null});
+                             callback(null,{"status":true,"count":rows.length,"msg":"Successfully Found","data":dataArray,"sprint_over":[]});
                           }
 
                           }
