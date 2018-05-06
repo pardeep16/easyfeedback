@@ -2,11 +2,20 @@ var getConnection=require('./db');
 var mysql=require('mysql');
 var async=require('async');
 
-var getCourseList=function(category,callback){
+var getCourseList=function(data,callback){
 
-  var categorySearch=category.toLowerCase().trim().toString();
-    
-    var querySelect='Select DISTINCT * from employee_feedback_prg where LOWER(category)='+mysql.escape(categorySearch)+" GROUP BY prg_name order by prg_id asc";
+  var categorySearch=data.category.toLowerCase().trim().toString();
+  var sprint=data.sprint;
+  var mentor=data.mentor;
+
+  console.log("Category :"+categorySearch);
+  console.log("Sprint :"+sprint);
+  console.log("Mentor :"+mentor);
+  
+  var searchSprintInputs='Select * from sprint_cyc where emp_id='+mysql.escape(mentor)+" and sprint_no="+mysql.escape(sprint);
+  console.log(searchSprintInputs);
+
+  var querySelect='Select DISTINCT * from employee_feedback_prg where LOWER(category)='+mysql.escape(categorySearch)+" GROUP BY prg_name order by prg_id asc";
     
     
     getConnection(function(err,conn){
@@ -38,8 +47,28 @@ var getCourseList=function(category,callback){
                               "category":rows[i].category
                            });
                        }
-                       conn.destroy();
-                       callback(null,{"status":true,"count":rows.length,"msg":"Successfully Found","data":dataArray});
+                       conn.query(searchSprintInputs,function(err,rows1){
+                          if(err){
+                              conn.destroy();
+                              callback(null,{"status":true,"count":rows.length,"msg":"Successfully Found","data":dataArray,"sprint_over":sprint_over});
+          
+                          }
+                          else{
+                            var sprint_over=new Array();
+                            if(rows1.length>0){
+                            for(var j=0;j<rows1.length;j++){
+                              sprint_over.push(rows1[j].prg_id);
+                            }
+                            conn.destroy();
+                            callback(null,{"status":true,"count":rows.length,"msg":"Successfully Found","data":dataArray,"sprint_over":sprint_over});
+                          }
+                          else{
+                            conn.destroy();
+                             callback(null,{"status":true,"count":rows.length,"msg":"Successfully Found","data":dataArray,"sprint_over":null});
+                          }
+
+                          }
+                       });
                    }
                    else{
                        conn.destroy();
@@ -265,16 +294,18 @@ var getQuizesList=function(id,callback){
 
 
 var submitFeedbackMentor=function(datapass,callback){
-  var mentorid=datapass.mentor;
+  
+  var mentorid=datapass.mentor.trim();
   var data=datapass.data;
   var date=new Date();
   var len=data.length;
   var phase_id=datapass.phase_id;
   var prequestionsData=datapass.prequestions;
   var form_id=null;
+  var sprint_no=datapass.sprint;
 
 
-  var createNewForm="Insert into feedbackform(emp_id,date,totalmentee,category) values("+mysql.escape(mentorid)+","+mysql.escape(date)+","+mysql.escape(len)+","+"'"+"mentor"+"'"+")";
+ var createNewForm="Insert into feedbackform(emp_id,date,totalmentee,category) values("+mysql.escape(mentorid)+","+mysql.escape(date)+","+mysql.escape(len)+","+"'"+"mentor"+"'"+")";
   console.log(createNewForm);
 
   getConnection(function(err,conn){
@@ -349,15 +380,38 @@ var submitFeedbackMentor=function(datapass,callback){
                             callback(null,{"status":true,"msg":"Submitted Successfully"});
                         }
                         else{
-                            conn.destroy();
-                            callback(null,{"status":true,"msg":"Submitted Successfully"});
+                            // conn.destroy();
+                            // callback(null,{"status":true,"msg":"Submitted Successfully"});
+
+                          var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(prg_id)+","+mysql.escape(form_id)+")";
+                          conn.query(insertSprint,function(err,rowss){
+                            if(err){
+                                 conn.destroy();
+                                 callback(null,{"status":false,"msg":err});
+                            }
+                            else{
+                              conn.destroy();
+                              callback(null,{"status":true,"msg":"Submitted Successfully"});
+                            }
+                          });
                         }
                       });
 
                   }
                   else{
-                  conn.destroy();
-                   callback(null,{"status":true,"msg":"Submitted Successfully"});
+                  // conn.destroy();
+                  //  callback(null,{"status":true,"msg":"Submitted Successfully"});
+                  var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(prg_id)+","+mysql.escape(form_id)+")";
+                          conn.query(insertSprint,function(err,rowss){
+                            if(err){
+                                 conn.destroy();
+                                 callback(null,{"status":false,"msg":err});
+                            }
+                            else{
+                              conn.destroy();
+                              callback(null,{"status":true,"msg":"Submitted Successfully"});
+                            }
+                          });
                  }
                 }
               });

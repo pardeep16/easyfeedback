@@ -4,8 +4,15 @@ var coursemod=require('.././models/courses');
 var getCourses=function (req,res) {
 	// body...
 	var category=req.query.category;
+	var mentor=req.query.mentor;
+	var sprintCyc=req.query.sprint;
 
-	coursemod.getCourseList(category,function(err,result){
+	var data={
+		"category":category,
+		"mentor":mentor,
+		"sprint":sprintCyc
+	};	
+	coursemod.getCourseList(data,function(err,result){
 		if(err){
 			res.send(err);
 		}
