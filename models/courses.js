@@ -384,6 +384,7 @@ var submitFeedbackMentor=function(datapass,callback){
                             // callback(null,{"status":true,"msg":"Submitted Successfully"});
 
                           var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(phase_id)+","+mysql.escape(form_id)+")";
+                           console.log(insertSprint);
                           conn.query(insertSprint,function(err,rowss){
                             if(err){
                                  conn.destroy();
@@ -402,6 +403,7 @@ var submitFeedbackMentor=function(datapass,callback){
                   // conn.destroy();
                   //  callback(null,{"status":true,"msg":"Submitted Successfully"});
                   var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(phase_id)+","+mysql.escape(form_id)+")";
+                          console.log(insertSprint);
                           conn.query(insertSprint,function(err,rowss){
                             if(err){
                                  conn.destroy();
