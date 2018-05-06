@@ -383,26 +383,15 @@ var submitFeedbackMentor=function(datapass,callback){
                             // conn.destroy();
                             // callback(null,{"status":true,"msg":"Submitted Successfully"});
 
-                          var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(phase_id)+","+mysql.escape(form_id)+")";
-                           console.log(insertSprint);
-                          conn.query(insertSprint,function(err,rowss){
-                            if(err){
-                                 conn.destroy();
-                                 callback(null,{"status":false,"msg":err});
-                            }
-                            else{
-                              conn.destroy();
-                              callback(null,{"status":true,"msg":"Submitted Successfully"});
-                            }
-                          });
-                        }
-                      });
-
-                  }
-                  else{
-                  // conn.destroy();
-                  //  callback(null,{"status":true,"msg":"Submitted Successfully"});
-                  var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(phase_id)+","+mysql.escape(form_id)+")";
+                          var prg_id_search='Select * from quiz where q_id='+mysql.escape(phase_id);
+                  conn.query(prg_id_search,function(err,roww){
+                    if(err){
+                        conn.destroy();
+                        callback(null,{"status":false,"msg":err});
+                    }
+                    else{
+                      var prg_id=roww[0].courseid;
+                       var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(phase_id)+","+mysql.escape(form_id)+")";
                           console.log(insertSprint);
                           conn.query(insertSprint,function(err,rowss){
                             if(err){
@@ -414,6 +403,38 @@ var submitFeedbackMentor=function(datapass,callback){
                               callback(null,{"status":true,"msg":"Submitted Successfully"});
                             }
                           });
+                    }
+                  });
+                        }
+                      });
+
+                  }
+                  else{
+                  // conn.destroy();
+                  //  callback(null,{"status":true,"msg":"Submitted Successfully"});
+                  var prg_id_search='Select * from quiz where q_id='+mysql.escape(phase_id);
+                  conn.query(prg_id_search,function(err,roww){
+                    if(err){
+                        conn.destroy();
+                        callback(null,{"status":false,"msg":err});
+                    }
+                    else{
+                      var prg_id=roww[0].courseid;
+                       var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(phase_id)+","+mysql.escape(form_id)+")";
+                          console.log(insertSprint);
+                          conn.query(insertSprint,function(err,rowss){
+                            if(err){
+                                 conn.destroy();
+                                 callback(null,{"status":false,"msg":err});
+                            }
+                            else{
+                              conn.destroy();
+                              callback(null,{"status":true,"msg":"Submitted Successfully"});
+                            }
+                          });
+                    }
+                  });
+                 
                  }
                 }
               });
