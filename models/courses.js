@@ -391,7 +391,7 @@ var submitFeedbackMentor=function(datapass,callback){
                     }
                     else{
                       var prg_id=roww[0].courseid;
-                       var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(phase_id)+","+mysql.escape(form_id)+")";
+                       var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(prg_id)+","+mysql.escape(form_id)+")";
                           console.log(insertSprint);
                           conn.query(insertSprint,function(err,rowss){
                             if(err){
@@ -420,7 +420,7 @@ var submitFeedbackMentor=function(datapass,callback){
                     }
                     else{
                       var prg_id=roww[0].courseid;
-                       var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(phase_id)+","+mysql.escape(form_id)+")";
+                       var insertSprint='Insert into sprint_cyc(sprint_no,emp_id,prg_id,form_id) values('+mysql.escape(sprint_no)+","+mysql.escape(mentorid)+","+mysql.escape(prg_id)+","+mysql.escape(form_id)+")";
                           console.log(insertSprint);
                           conn.query(insertSprint,function(err,rowss){
                             if(err){
