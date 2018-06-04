@@ -66,7 +66,7 @@ var register=function(data,callback) {
                                     }
                                     else{
                                       conn.destroy();
-                                      callback(null,{"status":true,"msg":"Registered Successfully","emp_id":emp_id,"name":name,"category":category});
+                                      callback(null,{"status":true,"msg":"Your team will be map soon!","emp_id":emp_id,"name":name,"category":category});
                                  
                                     }
                                  });
