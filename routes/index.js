@@ -7,6 +7,7 @@ var courses=require('.././controllers/courses');
 var signin=require('.././controllers/signin');
 
 var quiz=require('.././controllers/quiz');
+var feedback=require('.././controllers/feedbackcontroller');
 
 
 /* GET home page. */
@@ -49,6 +50,8 @@ router.get('/app/final/android',function(req,res){
 router.get('/api/v1/easyfeedback/getMentee/:mentorId',signin.getMenteeNames);
 
 router.post('/api/v1/easyfeedback/submitfeedback/mentor',courses.submitMentorFeedback);
+
+router.post('/api/v1/data/feedback',feedback.getfeedbackData)
 
 
 module.exports = router;
