@@ -160,7 +160,7 @@ var fetchDbData=function(data,callback) {
 
 																		var prg_data_group=groupArray(prg_names,"prg_id");
 																		conn.destroy();
-																		callback(null,{"status":true,"sprint_cyc":sprint_data_arr,"feedbackform":feedback_form_data,"fb_detail_data_group_formid":fb_detail_data_group,"fb_detail_data_group_qid":fb_detail_data_group_mentee,"feedback_share_date_data":feedback_sharing_data_group,"prg_data":prg_data_group});
+																		callback(null,{"status":true,"mentor":emp_id,"sprint_no":sprint,"sprint_cyc":sprint_data_arr,"feedbackform":feedback_form_data,"fb_detail_data_group_formid":fb_detail_data_group,"fb_detail_data_group_qid":fb_detail_data_group_mentee,"feedback_share_date_data":feedback_sharing_data_group,"prg_data":prg_data_group});
 
 																	}
 																	else{
@@ -195,7 +195,7 @@ var fetchDbData=function(data,callback) {
 
 																		var prg_data_group=groupArray(prg_names,"prg_id");
 																		conn.destroy();
-																		callback(null,{"status":true,"sprint_cyc":sprint_data_arr,"feedbackform":feedback_form_data,"fb_detail_data_group_formid":fb_detail_data_group,"fb_detail_data_group_qid":fb_detail_data_group_mentee,"feedback_share_date_data":null,"prg_data":prg_data_group});
+																		callback(null,{"status":true,"mentor":emp_id,"sprint_no":sprint,"sprint_cyc":sprint_data_arr,"feedbackform":feedback_form_data,"fb_detail_data_group_formid":fb_detail_data_group,"fb_detail_data_group_qid":fb_detail_data_group_mentee,"feedback_share_date_data":null,"prg_data":prg_data_group});
 
 																	}
 																	else{
