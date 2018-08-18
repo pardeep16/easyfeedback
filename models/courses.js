@@ -294,7 +294,8 @@ var getQuizesList=function(id,callback){
 
 
 var submitFeedbackMentor=function(datapass,callback){
-  
+
+  console.log("req body :"+datapass);
   var mentorid=datapass.mentor.trim();
   var data=datapass.data;
   var date=new Date();
