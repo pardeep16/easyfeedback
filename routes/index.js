@@ -51,7 +51,10 @@ router.get('/api/v1/easyfeedback/getMentee/:mentorId',signin.getMenteeNames);
 
 router.post('/api/v1/easyfeedback/submitfeedback/mentor',courses.submitMentorFeedback);
 
-router.post('/api/v1/data/feedback',feedback.getfeedbackData)
+router.post('/api/v1/data/feedback',feedback.getfeedbackData);
+
+router.post('/api/v1/feedbackstatus',feedback.checkStatusFeedback);
+
 
 
 module.exports = router;

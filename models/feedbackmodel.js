@@ -112,9 +112,9 @@ var fetchDbData=function(data,callback) {
 												
 												//Query for fetching the mentor pre feedback with date question
 												var getPrgIds=convertPrgIdString(sprint_data_arr);
-												console.log(getPrgIds);
+												//console.log(getPrgIds);
 												var fb_share_date_query="select mt.prg_id as prg_id,mt.question as pre_question,mt.id as q_id,fd.feed_share_id,fd.emp_id as mentor_id,fd.planned_date,fd.actual_date,fd.form_id from mentor_feedback_question mt,feedback_sharing_date fd where (mt.prg_id IN "+getPrgIds+" AND fd.form_id IN "+getFormIds+" ) AND mt.prg_id=fd.prg_id AND mt.id=fd.ques_id AND fd.emp_id="+mysql.escape(emp_id)+";";
-												console.log(fb_share_date_query);
+												//console.log(fb_share_date_query);
 												var fd_prg_name_query="Select distinct * from employee_feedback_prg where prg_id IN "+getPrgIds+";";
 
 												var fb_share_date_data=null;
@@ -273,7 +273,45 @@ function convertPrgIdString(sprint_arr){
 	return returnStr;
 }
 
+var checkFeedBackServiceStatus=function(datareq,callback){
+	var mentor_id=datareq.mentor_id;
+	var sprint=datareq.sprint;
+	var prg_id=datareq.prg_id;
+
+	var searchReqQuery="Select * from sprint_cyc where emp_id="+mysql.escape(mentor_id)+" and sprint_no="+mysql.escape(sprint)+" and prg_id="+mysql.escape(prg_id)+";";
+	//console.log(searchReqQuery);
+	getConnection(function(err,conn){
+		if(err){
+			try{
+				conn.destroy();
+				callback({"status":false,"msg":"Server Timeout"+err},null);
+			}
+			catch(exception){
+				console.log(exception);
+			}
+			
+		}
+		else{
+			conn.query(searchReqQuery,function(err,rowss){
+				if(err){
+					conn.destroy();
+					callback({"status":false,"msg":"Server Timeout"},null);
+				}
+				else{
+					if(rowss.length>0){
+						callback({"status":false,"msg":"Feedback already submitted for sprint"},null);
+					}
+					else{
+						callback(null,{"status":true,"msg":"No record found"});
+					}
+				}
+			});
+		}
+	});
+}
+
 
 module.exports={
-	fetchDbData:fetchDbData
+	fetchDbData:fetchDbData,
+	checkFeedBackServiceStatus:checkFeedBackServiceStatus
 }
