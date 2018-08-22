@@ -31,6 +31,32 @@ var getfeedbackData=function (req,res,next) {
 	}
 }
 
+var checkStatusFeedback=function(req,res,next){
+	var data={
+		"mentor_id":req.body.mentor_id,
+        "sprint":req.body.sprint,
+        "prg_id":req.body.prg_id
+	}
+
+	if(data.mentor_id && data.sprint && data.prg_id){
+		feedbackm.checkFeedBackServiceStatus(data,function(err,result){
+			if(err){
+				res.send(err);
+			}
+			else{
+				res.send(result);
+			}
+		});
+	}
+	else{
+		res.send({
+			"status":false,
+			"msg":"Unable to fetch data.Invalid request"
+		});
+	}
+}
+
 module.exports={
-	getfeedbackData:getfeedbackData
+	getfeedbackData:getfeedbackData,
+	checkStatusFeedback:checkStatusFeedback
 }
